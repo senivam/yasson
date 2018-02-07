@@ -121,7 +121,7 @@ public class DeserializerBuilder extends AbstractSerializerBuilder<DeserializerB
 
         //Third deserializer is a supported value type to deserialize to JSON_VALUE
         if (isJsonValueEvent()) {
-            final Optional<AbstractValueTypeDeserializer<?>> supportedTypeDeserializer = getSupportedTypeDeserializer(rawType);
+            final Optional<JsonbDeserializer<?>> supportedTypeDeserializer = getSupportedTypeDeserializer(rawType);
             if (!supportedTypeDeserializer.isPresent()) {
                 throw new JsonbException(Messages.getMessage(MessageKeys.DESERIALIZE_VALUE_ERROR, getRuntimeType()));
             }
@@ -184,10 +184,16 @@ public class DeserializerBuilder extends AbstractSerializerBuilder<DeserializerB
     }
 
 
-    private Optional<AbstractValueTypeDeserializer<?>> getSupportedTypeDeserializer(Class<?> rawType) {
+    private Optional<JsonbDeserializer<?>> getSupportedTypeDeserializer(Class<?> rawType) {
         final Optional<? extends SerializerProviderWrapper> supportedTypeDeserializerOptional = DefaultSerializers.getInstance().findValueSerializerProvider(rawType);
         if (supportedTypeDeserializerOptional.isPresent()) {
             return Optional.of(supportedTypeDeserializerOptional.get().getDeserializerProvider().provideDeserializer(getModel()));
+        }
+        final ComponentMatcher componentMatcher = jsonbContext.getComponentMatcher();
+        Optional<DeserializerBinding<?>> userDeserializer =
+                componentMatcher.getDeserializerBinding(getRuntimeType(), null);
+        if (userDeserializer.isPresent()){
+            return Optional.of(userDeserializer.get().getJsonbDeserializer());
         }
         return Optional.empty();
     }
