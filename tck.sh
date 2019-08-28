@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-export TCK_HOME=${WORKSPACE}
+export TCK_HOME='.'
 
 TCK_NAME=jsonbtck
 TS_HOME=$TCK_HOME/$TCK_NAME
@@ -8,7 +8,7 @@ TS_HOME=$TCK_HOME/$TCK_NAME
 echo "Downloading JSON-B TCK tests"
 wget -q http://download.eclipse.org/ee4j/jakartaee-tck/jakartaee8-eftl/promoted/eclipse-jsonb-tck-1.0.0.zip
 echo "Exporting downloaded TCK tests"
-unzip ${WORKSPACE}/eclipse-jsonb-tck-*.zip -d ${TCK_HOME}
+unzip eclipse-jsonb-tck-*.zip -d ${TCK_HOME}
 
 sed -i "s#^report.dir=.*#report.dir=$TCK_HOME/${TCK_NAME}report/${TCK_NAME}#g" ts.jte
 sed -i "s#^work.dir=.*#work.dir=$TCK_HOME/${TCK_NAME}work/${TCK_NAME}#g" ts.jte
