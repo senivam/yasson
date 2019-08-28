@@ -80,7 +80,7 @@ public class CollectionsTest {
         numberList.add(2f);
         numberList.add(10);
 
-        String result = jsonb.toJson(numberList, new TestTypeToken<List<Number>>(){}.getType());
+        assertEquals("[1,2.0,10]", jsonb.toJson(numberList, new TestTypeToken<List<Number>>(){}.getType()));
     }
 
     @Test
