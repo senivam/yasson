@@ -2,6 +2,7 @@
 
 export TCK_HOME=`pwd`
 
+GF_BUNDLE_URL="central.maven.org/maven2/org/glassfish/main/distributions/glassfish/5.1.0/glassfish-5.1.0.zip"
 TCK_NAME=jsonb-tck
 TS_HOME=$TCK_HOME/$TCK_NAME
 
@@ -9,6 +10,11 @@ echo "Downloading JSON-B TCK tests"
 wget -q http://download.eclipse.org/ee4j/jakartaee-tck/jakartaee8-eftl/promoted/eclipse-jsonb-tck-1.0.0.zip
 echo "Exporting downloaded TCK tests"
 unzip eclipse-jsonb-tck-*.zip -d ${TCK_HOME}
+
+echo "Downloading GlassFish "
+wget --progress=bar:force --no-cache $GF_BUNDLE_URL -O latest-glassfish.zip
+echo "Exporting downloaded GlassFish"
+unzip ${TCK_HOME}/latest-glassfish.zip -d ${TCK_HOME}
 
 cd $TS_HOME/bin
 
