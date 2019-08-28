@@ -2,7 +2,7 @@
 
 export TCK_HOME='.'
 
-TCK_NAME=jsonbtck
+TCK_NAME=jsonb-tck
 TS_HOME=$TCK_HOME/$TCK_NAME
 
 echo "Downloading JSON-B TCK tests"
