@@ -10,7 +10,7 @@ wget -q http://download.eclipse.org/ee4j/jakartaee-tck/jakartaee8-eftl/promoted/
 echo "Exporting downloaded TCK tests"
 unzip eclipse-jsonb-tck-*.zip -d ${TCK_HOME}
 
-cd $TS_HOME
+cd $TS_HOME/bin
 
 sed -i "s#^report.dir=.*#report.dir=$TCK_HOME/${TCK_NAME}report/${TCK_NAME}#g" ts.jte
 sed -i "s#^work.dir=.*#work.dir=$TCK_HOME/${TCK_NAME}work/${TCK_NAME}#g" ts.jte
