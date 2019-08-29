@@ -16,6 +16,8 @@ wget --progress=bar:force --no-cache $GF_BUNDLE_URL -O latest-glassfish.zip
 echo "Exporting downloaded GlassFish"
 unzip ${TCK_HOME}/latest-glassfish.zip -d ${TCK_HOME}
 
+cp -a target/yasson.jar glassfish5/glassfish/modules/yasson.jar
+
 cd $TS_HOME/bin
 
 sed -i "s#^report.dir=.*#report.dir=$TCK_HOME/${TCK_NAME}report/${TCK_NAME}#g" ts.jte
@@ -28,5 +30,14 @@ mkdir -p $TCK_HOME/${TCK_NAME}work/${TCK_NAME}
 # ant config.vi
 cd $TS_HOME/src/com/sun/ts/tests/
 #ant deploy.all
-ant run.all
-echo "Test run complete"
+ant run.all | tee ${TCK_HOME}/result.log
+export FAILED_COUNT=`grep -c "Finished Test:  FAILED" result.log`
+
+if [ "${FAILED_COUNT}" -gt "0" ]
+then
+        echo "FAILED TCK TESTS FOUND"
+        exit 1
+else
+        echo "TCK OK"
+        exit 0
+fi
