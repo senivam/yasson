@@ -9,12 +9,12 @@ TS_HOME=$TCK_HOME/$TCK_NAME
 echo "Downloading JSON-B TCK tests"
 wget -q http://download.eclipse.org/ee4j/jakartaee-tck/jakartaee8-eftl/promoted/eclipse-jsonb-tck-1.0.0.zip
 echo "Exporting downloaded TCK tests"
-unzip eclipse-jsonb-tck-*.zip -d ${TCK_HOME}
+unzip --quiet eclipse-jsonb-tck-*.zip -d ${TCK_HOME}
 
 echo "Downloading GlassFish "
 wget --progress=bar:force --no-cache $GF_BUNDLE_URL -O latest-glassfish.zip
 echo "Exporting downloaded GlassFish"
-unzip ${TCK_HOME}/latest-glassfish.zip -d ${TCK_HOME}
+unzip --quiet ${TCK_HOME}/latest-glassfish.zip -d ${TCK_HOME}
 
 cp -a target/yasson.jar glassfish5/glassfish/modules/yasson.jar
 
@@ -31,7 +31,7 @@ mkdir -p $TCK_HOME/${TCK_NAME}work/${TCK_NAME}
 cd $TS_HOME/src/com/sun/ts/tests/
 #ant deploy.all
 ant run.all | tee ${TCK_HOME}/result.log
-export FAILED_COUNT=`grep -c "Finished Test:  FAILED" result.log`
+export FAILED_COUNT=`grep -c "Finished Test:  FAILED" ${TCK_HOME}/result.log`
 
 if [ "${FAILED_COUNT}" -gt "0" ]
 then
