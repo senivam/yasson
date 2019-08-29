@@ -16,7 +16,7 @@ wget -q --no-cache $GF_BUNDLE_URL -O latest-glassfish.zip
 echo "Exporting downloaded GlassFish"
 unzip -qq ${TCK_HOME}/latest-glassfish.zip -d ${TCK_HOME}
 
-cp -a target/yasson.jar glassfish5/glassfish/modules/yasson.jar
+cp -a ${TCK_HOME}/target/yasson.jar ${TCK_HOME}/glassfish5/glassfish/modules/yasson.jar
 
 cd $TS_HOME/bin
 
